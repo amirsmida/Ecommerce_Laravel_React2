@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AllArticle } from "../Services/ServiceApi";
+import { AllArticle, getCategories } from "../Services/ServiceApi";
 import { useShoppingCart } from 'use-shopping-cart';
 
 function Shop() {
@@ -7,7 +7,17 @@ function Shop() {
     const { addItem } = useShoppingCart();
     const ImgUrl = "http://127.0.0.1:8000/img/"
 
-
+    const [categories, setCategories] = useState([]);
+    const GetCategories = async () => {
+        try {
+            const res = await getCategories()
+            setCategories(res.data);
+            console.log(res)
+            console.log(res.data)
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const GetAllArticle = async () => {
         try {
             const res = await AllArticle()
@@ -36,6 +46,8 @@ function Shop() {
 
     useEffect(() => {
         GetAllArticle()
+        GetCategories();
+
     }, []);
 
     return (
@@ -77,7 +89,35 @@ function Shop() {
                     </div>
                 </div>
             </div>
+            <div className="why-choose-section">
+                <div className="container">
 
+
+                    <div className="row my-5">
+                        {categories != undefined && categories.map((categorie) =>
+
+                            <div key={categorie?.id} className="col-6 col-md-6 col-lg-3 mb-4">
+                                <div className="feature">
+                                    <div className="icon">
+                                        {categorie?.logo ? (
+                                            <img
+                                                src={`${ImgUrl}${categorie.logo}`} alt="Logo" className="imf-fluid"
+                                            />
+                                        ) : (
+                                            <img src="src/assets/images/bag.svg" alt="" className="imf-fluid" />
+                                        )}
+                                    </div>
+                                    <h3>
+                                        {categorie?.nom}
+                                    </h3>
+                                    <p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+                                </div>
+                            </div>
+                        )}
+
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
