@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useShoppingCart } from 'use-shopping-cart';
 import { LignieCommende, PasserCommende } from "../Services/ServiceApi";
 
 
 function Cart() {
+    const ImgUrl = "http://127.0.0.1:8000/img/"
     const { cartDetails, clearCart, removeItem, cartCount, incrementItem, decrementItem } = useShoppingCart();
 
-    const [user, setUser] = useState({})
-    const ImgUrl = "http://127.0.0.1:8000/img/"
+    const [user, setUser] = useState('')
+    const navigate = useNavigate();
 
     const calculateTotalPrice = () => {
         let total = 0;
@@ -20,40 +21,43 @@ function Cart() {
     };
 
 
-    // const loadFromStorage = async () => {
-    //     let user = localStorage.getItem("User");
-    //     let customer = (user === null) ? undefined : JSON.parse(user);
-    //     console.log(customer.user)
-    //     if (customer !== undefined) {
-    //         setUser(customer.user);
-    //     } else {
-    //         setUser(undefined);
-    //     }
-    // }
+    const loadFromStorage = async () => {
+        let _userLoc = localStorage.getItem("User");
+        let customer = (_userLoc === null) ? undefined : JSON.parse(_userLoc);
+        console.log(customer.user)
+        if (customer !== undefined) {
+            setUser(customer.user.id);
+            console.log(user)
+        } else {
+            setUser('');
+        }
+    }
 
     const PasserCommande = async () => {
         try {
-            // loadFromStorage()
-            // if (user === undefined)
-            //     return alert("Please login to pass the commande")
-            // else {
-            let res = await PasserCommende(user.id || 1)
-            console.log(res)
-            if (res.data) {
-                Object.values(cartDetails).forEach(element => {
-                    let param = {
-                        id_commende: res.data,
-                        id_article: element.id,
-                        quantite: element.quantity,
-                        prixU: element.prix
-                    }
-                    LignieCommende(param)
-                });
-                clearCart()
-                alert("Commande passed successfully")
-                Navigate('/');
+            loadFromStorage()
+            if (user == '') {
+                navigate('/Login');
+                return alert("Please login to pass the commande")
+            }
+            else {
+                let res = await PasserCommende(user.id)
+                console.log(res)
+                if (res.data) {
+                    Object.values(cartDetails).forEach(element => {
+                        let param = {
+                            id_commende: res.data,
+                            id_article: element.id,
+                            quantite: element.quantity,
+                            prixU: element.prix
+                        }
+                        LignieCommende(param)
+                    });
+                    clearCart()
+                    alert("Commande passed successfully")
+                    Navigate('/');
 
-                // }
+                }
             }
         } catch (error) {
             console.log(error);
@@ -61,7 +65,8 @@ function Cart() {
     };
 
     useEffect(() => {
-    }, [])
+        loadFromStorage()
+    }, [user])
     return (
         <div>
             {cartCount === 0 ? (
@@ -153,7 +158,7 @@ function Cart() {
 
                                         <div className="row">
                                             <div className="col-md-12">
-                                                <button className="btn btn-black btn-lg py-3 btn-block"  onClick={(e) => PasserCommande(e)}  >Proceed To Checkout</button>
+                                                <button className="btn btn-black btn-lg py-3 btn-block" onClick={(e) => PasserCommande(e)}  >Proceed To Checkout</button>
                                             </div>
                                         </div>
                                     </div>

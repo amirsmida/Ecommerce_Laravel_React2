@@ -27,3 +27,10 @@ export const PasserCommende = async (userID) => {
 export const LignieCommende = async (Lcomm) => {
     return await axios.post("lignie_commende", Lcomm);
 }
+export const Register_User = async (user) => {
+    return await axios.post("inscrit_client", user);
+}
+
+export const Login_User = async (user) => {
+    return await axios.post("auth/login", user);
+}

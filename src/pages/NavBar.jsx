@@ -1,9 +1,25 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useShoppingCart } from "use-shopping-cart";
 
 function NavBar() {
+  let [customer, setCustomer] = useState(undefined);
   const { cartCount } = useShoppingCart();
+  const loadFromStorage = async () => {
+    const user = localStorage.getItem("User");
+    customer = (user === null) ? undefined : JSON.parse(user);
+    if (customer !== undefined)
+      setCustomer(customer.user)
+    console.log(customer);
+  }
+  useEffect(() => {
+    loadFromStorage()
+  }, [customer]);
 
+  const handleLogOut = async (event) => {
+    event.preventDefault();
+    localStorage.removeItem("User");
+  }
   return (
     <>
       <nav
@@ -40,11 +56,18 @@ function NavBar() {
             </ul>
 
             <ul className="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-              {/* <li>
-                <a className="nav-link" href="#">
+              <li>
+                <Link className="nav-link" to="/Login">
                   <img src="src/assets/images/user.svg" />
-                </a>
-              </li> */}
+                </Link>
+
+              </li>
+              <li className="nav-item" onClick={(e) => handleLogOut(e)}>
+                {
+                  customer !== null && customer !== undefined ? (
+                    <Link className="nav-link">logout</Link>
+                  ) : null}
+              </li>
               <li>
                 <Link to="/Cart" className="nav-link">
                   <img src="src/assets/images/cart.svg" />
