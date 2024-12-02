@@ -7,7 +7,7 @@ function Acceuil() {
             <div className="col-lg-5">
               <div className="intro-excerpt">
                 <h1>
-                  Modern Interior <span clsas="d-block">Design Studio</span>
+                  Modern Interior <span className="d-block">Design Studio</span>
                 </h1>
                 <p className="mb-4">
                   Donec vitae odio quis nisl dapibus malesuada. Nullam ac
@@ -26,7 +26,7 @@ function Acceuil() {
             </div>
             <div className="col-lg-7">
               <div className="hero-img-wrap">
-                <img src="images/couch.png" className="img-fluid" />
+                <img src="src/assets/images/couch.png" className="img-fluid" />
               </div>
             </div>
           </div>
@@ -47,7 +47,7 @@ function Acceuil() {
                   <div className="feature">
                     <div className="icon">
                       <img
-                        src="images/truck.svg"
+                        src="src/assets/images/truck.svg"
                         alt="Image"
                         className="imf-fluid"
                       />
@@ -64,7 +64,7 @@ function Acceuil() {
                   <div className="feature">
                     <div className="icon">
                       <img
-                        src="images/bag.svg"
+                        src="src/assets/images/bag.svg"
                         alt="Image"
                         className="imf-fluid"
                       />
@@ -81,7 +81,7 @@ function Acceuil() {
                   <div className="feature">
                     <div className="icon">
                       <img
-                        src="images/support.svg"
+                        src="src/assets/images/support.svg"
                         alt="Image"
                         className="imf-fluid"
                       />
@@ -98,7 +98,7 @@ function Acceuil() {
                   <div className="feature">
                     <div className="icon">
                       <img
-                        src="images/return.svg"
+                        src="src/assets/images/return.svg"
                         alt="Image"
                         className="imf-fluid"
                       />
@@ -116,7 +116,7 @@ function Acceuil() {
             <div className="col-lg-5">
               <div className="img-wrap">
                 <img
-                  src="images/why-choose-us-img.jpg"
+                  src="src/assets/images/why-choose-us-img.jpg"
                   alt="Image"
                   className="img-fluid"
                 />

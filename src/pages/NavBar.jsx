@@ -1,4 +1,9 @@
+import { Link } from "react-router-dom";
+import { useShoppingCart } from "use-shopping-cart";
+
 function NavBar() {
+  const { cartCount } = useShoppingCart();
+
   return (
     <>
       <nav
@@ -6,9 +11,9 @@ function NavBar() {
         arial-label="Furni navigation bar"
       >
         <div className="container">
-          <a className="navbar-brand" href="index.html">
+          <Link className="navbar-brand" to="/">
             Furni<span>.</span>
-          </a>
+          </Link>
 
           <button
             className="navbar-toggler"
@@ -25,53 +30,33 @@ function NavBar() {
           <div className="collapse navbar-collapse" id="navbarsFurni">
             <ul className="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
               <li className="nav-item active">
-                <a className="nav-link" href="index.html">
-                  Home
-                </a>
+                <Link className="nav-link" to="/">Home</Link>
               </li>
               <li>
-                <a className="nav-link" href="shop.html">
-                  Shop
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="about.html">
-                  About us
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="services.html">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="blog.html">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="contact.html">
-                  Contact us
-                </a>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/Shop">Shop</Link>
+                </li>
               </li>
             </ul>
 
             <ul className="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-              <li>
+              {/* <li>
                 <a className="nav-link" href="#">
-                  <img src="images/user.svg" />
+                  <img src="src/assets/images/user.svg" />
                 </a>
-              </li>
+              </li> */}
               <li>
-                <a className="nav-link" href="cart.html">
-                  <img src="images/cart.svg" />
-                </a>
+                <Link to="/Cart" className="nav-link">
+                  <img src="src/assets/images/cart.svg" />
+
+                  <span className="badge badge-secondary">{cartCount}</span>
+                </Link>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-     
+
     </>
   );
 }
